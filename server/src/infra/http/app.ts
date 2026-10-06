@@ -11,6 +11,9 @@ import {
 import { env } from '../../env'
 import { errorHandler } from './error-handler'
 import { createLinkRoute } from './routes/create-link'
+import { deleteLinkRoute } from './routes/delete-link'
+import { getLinkRoute } from './routes/get-link'
+import { incrementLinkAccessRoute } from './routes/increment-link-access'
 
 export async function buildApp() {
   const app = fastify({
@@ -36,6 +39,9 @@ export async function buildApp() {
   await app.register(fastifySwaggerUi, { routePrefix: '/docs' })
 
   await app.register(createLinkRoute)
+  await app.register(getLinkRoute)
+  await app.register(incrementLinkAccessRoute)
+  await app.register(deleteLinkRoute)
 
   return app
 }
