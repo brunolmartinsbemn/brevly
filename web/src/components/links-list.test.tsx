@@ -153,4 +153,26 @@ describe('LinksList', () => {
     expect(await screen.findByText('brev.ly/Second-Page')).toBeInTheDocument()
     expect(http.getLinks).toHaveBeenCalledWith('page-2')
   })
+
+  it('keeps the loaded links when loading the next page fails', async () => {
+    vi.spyOn(http, 'getLinks').mockImplementation(async (cursor?: string) => {
+      if (cursor === 'page-2') {
+        throw new Error('network')
+      }
+      return { links: [makeLink()], nextCursor: 'page-2' }
+    })
+    renderWithProviders(<LinksList />)
+    await screen.findByText('brev.ly/Portfolio-Dev')
+
+    await waitFor(() => expect(observerCallback).not.toBeNull())
+    act(() => {
+      observerCallback!(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      )
+    })
+
+    expect(await screen.findByRole('button', { name: 'Tentar novamente' })).toBeInTheDocument()
+    expect(screen.getByText('brev.ly/Portfolio-Dev')).toBeInTheDocument()
+  })
 })

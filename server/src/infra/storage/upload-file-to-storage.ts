@@ -26,6 +26,7 @@ export async function uploadFileToStorage({
       Key: key,
       Body: contentStream,
       ContentType: contentType,
+      ContentDisposition: `attachment; filename="${fileName}"`,
     },
   })
 

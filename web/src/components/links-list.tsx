@@ -28,12 +28,12 @@ export function LinksList() {
   })
 
   const links = query.data?.pages.flatMap((page) => page.links) ?? []
-  const { hasNextPage, isFetchingNextPage, fetchNextPage } = query
+  const { hasNextPage, isFetchingNextPage, isFetchNextPageError, fetchNextPage } = query
   const sentinelRef = useRef<HTMLLIElement>(null)
 
   useEffect(() => {
     const sentinel = sentinelRef.current
-    if (!sentinel || !hasNextPage) {
+    if (!sentinel || !hasNextPage || isFetchNextPageError) {
       return
     }
 
@@ -45,7 +45,7 @@ export function LinksList() {
     observer.observe(sentinel)
 
     return () => observer.disconnect()
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage])
+  }, [hasNextPage, isFetchingNextPage, isFetchNextPageError, fetchNextPage])
 
   return (
     <section className="flex w-full min-w-0 flex-col gap-4 rounded-lg bg-gray-100 p-6 lg:gap-5 lg:p-8">
@@ -72,7 +72,7 @@ export function LinksList() {
             Carregando links...
           </ListState>
         </div>
-      ) : query.isError ? (
+      ) : query.isError && !query.data ? (
         <div className="flex flex-col gap-4">
           <hr className="m-0 -mb-px border-0 border-t border-gray-200" />
           <ListState icon={<img src={linkIcon} alt="" width={32} height={32} />}>
@@ -99,6 +99,17 @@ export function LinksList() {
             <LinkRow key={link.id} link={link} />
           ))}
           <li ref={sentinelRef} aria-hidden className="-mt-3 h-0 lg:-mt-4" />
+          {isFetchNextPageError && !isFetchingNextPage && (
+            <li className="flex justify-center py-2">
+              <button
+                type="button"
+                onClick={() => fetchNextPage()}
+                className="cursor-pointer text-xs font-bold text-blue-base uppercase underline"
+              >
+                Tentar novamente
+              </button>
+            </li>
+          )}
           {isFetchingNextPage && (
             <li className="flex justify-center py-2">
               <CircleNotch className="size-5 animate-spin text-gray-400" aria-label="Carregando mais links" />
