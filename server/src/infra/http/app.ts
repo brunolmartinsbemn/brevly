@@ -10,6 +10,7 @@ import {
 } from 'fastify-type-provider-zod'
 import { env } from '../../env'
 import { errorHandler } from './error-handler'
+import { createLinkRoute } from './routes/create-link'
 
 export async function buildApp() {
   const app = fastify({
@@ -33,6 +34,8 @@ export async function buildApp() {
   })
 
   await app.register(fastifySwaggerUi, { routePrefix: '/docs' })
+
+  await app.register(createLinkRoute)
 
   return app
 }
