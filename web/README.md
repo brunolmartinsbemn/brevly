@@ -1,32 +1,34 @@
-# React + TypeScript + Vite
+# brev.ly — web
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+SPA React + Vite do encurtador brev.ly.
 
-Currently, two official plugins are available:
+## Rodando localmente
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Suba a API (ver `../server/README.md`).
+2. Em `web/`, crie o `.env` a partir do `.env.example`:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```
+VITE_FRONTEND_URL=http://localhost:5173
+VITE_BACKEND_URL=http://localhost:3333
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+3. Instale e rode:
+
+```bash
+npm install
+npm run dev
+```
+
+## Testes
+
+```bash
+npm test
+```
+
+## Páginas
+
+| rota | descrição |
+|---|---|
+| `/` | cadastro e listagem de links |
+| `/:url-encurtada` | busca a URL original, conta o acesso e redireciona |
+| qualquer outra | página de link não encontrado |
