@@ -44,7 +44,7 @@ export function LinkRow({ link }: LinkRowProps) {
 
   return (
     <li className="flex flex-col gap-3 lg:gap-4">
-      <hr className="m-0 border-0 border-t border-gray-200" />
+      <hr className="m-0 -mb-px border-0 border-t border-gray-200" />
       <div className="flex items-center gap-4 py-0.5 lg:gap-5">
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           <a

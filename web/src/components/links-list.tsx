@@ -66,15 +66,15 @@ export function LinksList() {
       </header>
 
       {query.isPending ? (
-        <div className="flex flex-col">
-          <hr className="m-0 border-0 border-t border-gray-200" />
+        <div className="flex flex-col gap-4">
+          <hr className="m-0 -mb-px border-0 border-t border-gray-200" />
           <ListState icon={<CircleNotch className="size-8 animate-spin text-gray-400" aria-hidden />}>
             Carregando links...
           </ListState>
         </div>
       ) : query.isError ? (
-        <div className="flex flex-col">
-          <hr className="m-0 border-0 border-t border-gray-200" />
+        <div className="flex flex-col gap-4">
+          <hr className="m-0 -mb-px border-0 border-t border-gray-200" />
           <ListState icon={<img src={linkIcon} alt="" width={32} height={32} />}>
             Não foi possível carregar os links.{' '}
             <button
@@ -87,8 +87,8 @@ export function LinksList() {
           </ListState>
         </div>
       ) : links.length === 0 ? (
-        <div className="flex flex-col">
-          <hr className="m-0 border-0 border-t border-gray-200" />
+        <div className="flex flex-col gap-4">
+          <hr className="m-0 -mb-px border-0 border-t border-gray-200" />
           <ListState icon={<img src={linkIcon} alt="" width={32} height={32} />}>
             Ainda não existem links cadastrados
           </ListState>
@@ -98,7 +98,7 @@ export function LinksList() {
           {links.map((link) => (
             <LinkRow key={link.id} link={link} />
           ))}
-          <li ref={sentinelRef} aria-hidden className="-mt-3 h-px lg:-mt-4" />
+          <li ref={sentinelRef} aria-hidden className="-mt-3 h-0 lg:-mt-4" />
           {isFetchingNextPage && (
             <li className="flex justify-center py-2">
               <CircleNotch className="size-5 animate-spin text-gray-400" aria-label="Carregando mais links" />
