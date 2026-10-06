@@ -15,6 +15,11 @@ type Cursor = {
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
+function isIsoTimestamp(value: string) {
+  const date = new Date(value)
+  return !Number.isNaN(date.getTime()) && date.toISOString() === value
+}
+
 function encodeCursor(cursor: Cursor) {
   return Buffer.from(`${cursor.createdAt}|${cursor.id}`).toString('base64url')
 }
@@ -22,7 +27,7 @@ function encodeCursor(cursor: Cursor) {
 function decodeCursor(value: string): Cursor {
   const [createdAt, id] = Buffer.from(value, 'base64url').toString('utf8').split('|')
 
-  if (!createdAt || !id || Number.isNaN(Date.parse(createdAt)) || !UUID_REGEX.test(id)) {
+  if (!createdAt || !id || !isIsoTimestamp(createdAt) || !UUID_REGEX.test(id)) {
     throw new InvalidCursorError()
   }
 

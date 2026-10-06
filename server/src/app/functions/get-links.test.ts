@@ -52,7 +52,11 @@ describe('getLinks', () => {
     }
   })
 
-  it.each(['not-base64-!!', Buffer.from('garbage').toString('base64url')])(
+  it.each([
+    'not-base64-!!',
+    Buffer.from('garbage').toString('base64url'),
+    Buffer.from('1|00000000-0000-0000-0000-000000000000').toString('base64url'),
+  ])(
     'rejects an invalid cursor (%s)',
     async (cursor) => {
       await expect(getLinks({ pageSize: 20, cursor })).rejects.toBeInstanceOf(

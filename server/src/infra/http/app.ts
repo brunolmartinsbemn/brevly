@@ -10,6 +10,7 @@ import {
 } from 'fastify-type-provider-zod'
 import { env } from '../../env'
 import { errorHandler } from './error-handler'
+import { getLogLevel } from './log-level'
 import { createLinkRoute } from './routes/create-link'
 import { deleteLinkRoute } from './routes/delete-link'
 import { exportLinksRoute } from './routes/export-links'
@@ -19,7 +20,7 @@ import { incrementLinkAccessRoute } from './routes/increment-link-access'
 
 export async function buildApp() {
   const app = fastify({
-    logger: env.NODE_ENV === 'development',
+    logger: { level: getLogLevel(env.NODE_ENV) },
   }).withTypeProvider<ZodTypeProvider>()
 
   app.setValidatorCompiler(validatorCompiler)

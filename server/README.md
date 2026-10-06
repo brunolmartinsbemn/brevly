@@ -4,18 +4,13 @@ API do encurtador brev.ly (Fastify + Drizzle + Postgres).
 
 ## Rodando localmente
 
-```bash
-# na raiz do repositório: Postgres (bancos brevly e brevly_test) + MinIO (bucket público brevly)
-docker compose up -d
+1. Na raiz do repositório, suba Postgres (bancos `brevly` e `brevly_test`) e MinIO (bucket público `brevly`):
 
-# em server/
-cp .env.example .env
-npm install
-npm run db:migrate
-npm run dev
+```bash
+docker compose up -d
 ```
 
-Valores do `.env` para a infra local do `docker-compose`:
+2. Em `server/`, crie o `.env` a partir do `.env.example` e preencha com os valores da infra local:
 
 ```
 PORT=3333
@@ -26,6 +21,14 @@ CLOUDFLARE_SECRET_ACCESS_KEY=minioadmin
 CLOUDFLARE_BUCKET=brevly
 CLOUDFLARE_PUBLIC_URL=http://localhost:9000/brevly
 CLOUDFLARE_ENDPOINT=http://localhost:9000
+```
+
+3. Instale, migre e rode:
+
+```bash
+npm install
+npm run db:migrate
+npm run dev
 ```
 
 Para usar o Cloudflare R2, preencha as chaves `CLOUDFLARE_*` com os dados do bucket e deixe `CLOUDFLARE_ENDPOINT` vazio.
