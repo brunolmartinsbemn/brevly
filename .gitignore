@@ -1,0 +1,10 @@
+# Dependências e build
+node_modules/
+dist/
+
+# Variáveis de ambiente (os .env.example e .env.test ficam versionados)
+.env
+.env.local
+
+# Sistema
+.DS_Store
