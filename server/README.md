@@ -4,13 +4,13 @@ API do encurtador brev.ly (Fastify + Drizzle + Postgres).
 
 ## Rodando localmente
 
-1. Na raiz do repositório, suba Postgres (bancos `brevly` e `brevly_test`) e MinIO (bucket público `brevly`):
+1. Em `server/`, suba Postgres (bancos `brevly` e `brevly_test`) e MinIO (bucket público `brevly`, compatível com S3, para desenvolvimento):
 
 ```bash
 docker compose up -d
 ```
 
-2. Em `server/`, crie o `.env` a partir do `.env.example` e preencha com os valores da infra local:
+2. Crie o `.env` a partir do `.env.example` e preencha com os valores da infra local:
 
 ```
 PORT=3333
